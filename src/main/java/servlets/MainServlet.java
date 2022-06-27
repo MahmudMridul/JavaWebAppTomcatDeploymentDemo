@@ -33,6 +33,13 @@ public class MainServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = null;
 		
+		LogConfig.getInstance().log(MainServlet.class, System.getProperty("user.home"));
+		LogConfig.getInstance().log(MainServlet.class, System.getProperty("catalina.home"));
+		LogConfig.getInstance().log(MainServlet.class, System.getProperty("catalina.base"));
+		LogConfig.getInstance().log(MainServlet.class, System.getProperty("java.io.tmpdir"));
+
+		
+		
 		try
 		{
 			out = response.getWriter();
@@ -42,16 +49,25 @@ public class MainServlet extends HttpServlet {
 			out.println("<center>");
 			
 			LogConfig.getInstance().log(MainServlet.class, "Checking for even odd");
-			if(number%2==0)
+			
+			try
 			{
-				LogConfig.getInstance().log(MainServlet.class, "Number is even");
-				out.println(number + " is even number");
+				if(number%2==0)
+				{
+					LogConfig.getInstance().log(MainServlet.class, number+" is even");
+					out.println(number + " is even number");
+				}
+				else
+				{
+					LogConfig.getInstance().log(MainServlet.class, number+" is odd");
+					out.println(number + " is odd number");
+				}
 			}
-			else
+			catch(Exception e)
 			{
-				LogConfig.getInstance().log(MainServlet.class, "Number is odd");
-				out.println(number + " is odd number");
+				LogConfig.getInstance().log(MainServlet.class, e.getMessage());
 			}
+			
 			LogConfig.getInstance().log(MainServlet.class, "End of check");
 			
 			out.println("</center>");

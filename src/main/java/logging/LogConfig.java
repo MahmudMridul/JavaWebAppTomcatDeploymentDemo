@@ -1,9 +1,11 @@
 package logging;
 
 import java.io.InputStream;
+import java.io.File;
 import java.util.logging.Logger;
 import java.util.logging.LogManager;
 import java.util.logging.Level;
+//import org.apache.juli.ClassLoaderLogManager;
 
 public class LogConfig 
 {
@@ -17,6 +19,7 @@ public class LogConfig
 		try
 		{
 			InputStream inputStream = LogConfig.class.getClassLoader().getResourceAsStream(CONF_FILE);
+			//ClassLoaderLogManager.getLogManager().readConfiguration(inputStream);
 			LogManager.getLogManager().readConfiguration(inputStream);
 		}
 		catch(Exception e) 
@@ -30,7 +33,20 @@ public class LogConfig
 	{
 		if(instance == null)
 		{
-			return new LogConfig();
+			instance = new LogConfig();
+			String directory = System.getProperty("user.home");
+			
+			try
+			{
+				File logDirectory = new File(directory+"\\DemoWebAppLogs");
+				logDirectory.mkdir();
+			}
+			catch(Exception e)
+			{
+				LogConfig.getInstance().log(LogConfig.class, e.getMessage());
+			}
+			
+			return instance;
 		}
 		else
 		{
