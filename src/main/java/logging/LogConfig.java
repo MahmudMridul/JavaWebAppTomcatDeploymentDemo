@@ -10,7 +10,6 @@ import java.util.logging.Level;
 public class LogConfig 
 {
 	private static final String CONF_FILE = "logging.properties";
-	//private static Logger logger = null;
 	private static LogConfig instance = null;
 	
 	
@@ -19,7 +18,6 @@ public class LogConfig
 		try
 		{
 			InputStream inputStream = LogConfig.class.getClassLoader().getResourceAsStream(CONF_FILE);
-			//ClassLoaderLogManager.getLogManager().readConfiguration(inputStream);
 			LogManager.getLogManager().readConfiguration(inputStream);
 		}
 		catch(Exception e) 
